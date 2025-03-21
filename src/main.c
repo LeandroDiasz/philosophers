@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 int main(int ac, char **av)
 {
@@ -20,7 +20,7 @@ int main(int ac, char **av)
         parse_input(av, &table);
         init_table(&table);
         start_simulation(&table);
-        clean(&table);
+        //clean(&table);
     }
     else
     {
