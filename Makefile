@@ -3,7 +3,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 THREAD = -pthread
 
-SRC = src/init.c src/main.c src/parsing.c src/utils.c src/routine.c
+SRC = src/init.c src/main.c src/parsing.c src/utils.c src/philo.c src/monitor.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
