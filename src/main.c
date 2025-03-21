@@ -12,19 +12,19 @@
 
 #include "../philo.h"
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    t_table table;
-    if (ac == 5 || ac == 6)
-    {
-        parse_input(av, &table);
-        init_table(&table);
-        start_simulation(&table);
-        //clean(&table);
-    }
-    else
-    {
-        error_exit("Error: Wrong number of arguments\n");
-        return (0);
-    }
+	t_table table;
+	if (ac == 5 || ac == 6)
+	{
+		parse_input(av, &table);
+		init_table(&table);
+		start_simulation(&table);
+		free_table(&table);
+	}
+	else
+	{
+		error_exit("Error: Wrong number of arguments\n");
+		return (0);
+	}
 }
