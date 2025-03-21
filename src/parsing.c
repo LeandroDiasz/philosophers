@@ -12,38 +12,40 @@
 
 #include "../philo.h"
 
-long    ft_atol(const char *str)
+long	ft_atol(const char *str)
 {
-    long    res;
+	long	res;
 
-    res = 0;
-    while (*str == ' ' || *str == '\t' || *str == '\n' ||
-    *str == '\v' || *str == '\f' || *str == '\r')
-        str++;
-    if (*str == '-' || *str == '+')
-    {
-        if (*str == '-')
-            error_exit("Error: Negative number of philosophers\n");
-        str++;
-    }
-    while (*str >= '0' && *str <= '9')
-    {
-        res = res * 10 + *str - '0';
-        str++;
-    }
-    if (res > INT_MAX)
-        error_exit("Error: Number of philosophers too big\n");
-    return (res);
+	res = 0;
+	while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\v'
+		|| *str == '\f' || *str == '\r')
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			error_exit("Error: Negative number of philosophers");
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		res = res * 10 + *str - '0';
+		str++;
+	}
+	if (res > INT_MAX)
+		error_exit("Error: Number of philosophers too big");
+	else if (res == 0)
+		error_exit("Error: Number of philosophers is 0");
+	return (res);
 }
 
-void    parse_input(char **av, t_table *table)
+void	parse_input(char **av, t_table *table)
 {
-    table->num_philos = ft_atol(av[1]);
-    table->time_to_die = ft_atol(av[2]);
-    table->time_to_eat = ft_atol(av[3]);
-    table->time_to_sleep = ft_atol(av[4]);
-    if (av[5])
-        table->nbr_limits_meals = ft_atol(av[5]);
-    else
-        table->nbr_limits_meals = -1;
+	table->num_philos = ft_atol(av[1]);
+	table->time_to_die = ft_atol(av[2]);
+	table->time_to_eat = ft_atol(av[3]);
+	table->time_to_sleep = ft_atol(av[4]);
+	if (av[5])
+		table->nbr_limits_meals = ft_atol(av[5]);
+	else
+		table->nbr_limits_meals = -1;
 }
