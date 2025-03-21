@@ -42,6 +42,7 @@ typedef struct s_philo
     t_fork      *left_fork;
     t_fork      *right_fork;
     pthread_t   thread;
+    t_mutex   print;
     t_table     *table;
 }	t_philo;
 
@@ -53,7 +54,8 @@ struct s_table
     long    time_to_sleep;
     long    nbr_limits_meals;
     long    start_time;
-    bool    end_time;
+    bool    end_table;
+    long    full_philos;
     t_fork  *forks;
     t_philo *philos;
 } ;
@@ -61,7 +63,9 @@ struct s_table
 /*--- utils.c ---*/
 
 void    error_exit(char *str);
-long   get_time(void);
+long    get_time(void);
+void    ft_print_status(t_philo *philo, char *status);
+void    ft_usleep(long time_in_ms);
 
 /*--- parsing.c ---*/
 
@@ -72,5 +76,10 @@ void    parse_input(char **av, t_table *table);
 
 void    init_table(t_table *table);
 
-/*--- main .c ---*/
+/*--- routine.c ---*/
+void    start_simulation(t_table *table);
+void    *routine(void *arg);
+void    monitor(t_table *table);
+int     check_philo_status(t_table *table, t_philo *philo);
+
 #endif
