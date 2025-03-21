@@ -10,16 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 void    init_table(t_table *table)
 {
     int i;
 
     table->start_time = get_time();
-    table->end_time = false;
+    table->end_table = false;
     table->forks = malloc(sizeof(t_fork) * table->num_philos);
     table->philos = malloc(sizeof(t_philo) * table->num_philos);
+    table->full_philos = 0;
     i = 0;
     while (i < table->num_philos)
     {
@@ -29,6 +30,8 @@ void    init_table(t_table *table)
         table->philos[i].last_meal_time = table->start_time;
         table->philos[i].left_fork = &table->forks[i];
         table->philos[i].right_fork = &table->forks[(i + 1) % table->num_philos];
+        table->philos[i].table = table;
+        pthread_mutex_init(&table->philos[i].print, NULL);
         i++;
     }
     i = 0;
