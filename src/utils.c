@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 void    error_exit(char *str)
 {
@@ -25,4 +25,28 @@ long   get_time(void)
     if (gettimeofday(&tv, NULL))
         error_exit("Error: gettimeofday failed\n");
     return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+void ft_usleep(long time_in_ms)
+{
+    long start_time = get_time();
+    long target_time = start_time + time_in_ms;
+
+    while (get_time() < target_time)
+    {
+        long remaining = target_time - get_time();
+        if (remaining > 1000)
+            usleep((remaining / 2) * 1000); // Dorme metade do tempo restante
+        else
+            usleep(remaining * 1000); // Dorme o tempo exato restante
+    }
+}
+
+void    ft_print_status(t_philo *philo, char *status)
+{
+    if (philo->table->end_table)
+        return ;
+    pthread_mutex_lock(&philo->print);
+    printf("%ld %d %s\n", get_time() - philo->table->start_time, philo->id, status);
+    pthread_mutex_unlock(&philo->print);
 }
