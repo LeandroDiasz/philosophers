@@ -36,6 +36,7 @@ void	monitor(t_table *table)
 		}
 	}
 }
+
 int	count_full(t_table *table)
 {
 	int	i;
