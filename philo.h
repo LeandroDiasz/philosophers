@@ -29,24 +29,19 @@ typedef pthread_mutex_t	t_mutex;
 typedef struct s_fork
 {
 	t_mutex				mutex;
-	int					fork_id;
 }						t_fork;
 
 typedef struct s_philo
 {
 	int					id;
 	long				meals_counter;
-	long				last_meal_time;
-	long				time_to_die;
-	long				time_to_eat;
-	long				time_to_sleep;
-	long				nbr_limits_meals;
 	long				start_time;
 	bool				full;
-	bool				end_table;
+	long				last_meal_time;
 	t_fork				*left_fork;
 	t_fork				*right_fork;
-	t_mutex				print;
+	t_mutex				philo_mutex;
+	t_table				*table;
 	pthread_t			thread;
 }						t_philo;
 
@@ -60,6 +55,8 @@ struct					s_table
 	long				start_time;
 	bool				end_table;
 	long				full_philos;
+	t_mutex				print;
+	t_mutex				end;
 	t_fork				*forks;
 	t_philo				*philos;
 };
@@ -92,5 +89,7 @@ void					unlock_forks(t_philo *philo);
 /*--- monitor.c ---*/
 void					monitor(t_table *table);
 int						check_philo_status(t_table *table, t_philo *philo);
+int						verify_end(t_philo *philo);
+int						count_full(t_table *table);
 
 #endif
