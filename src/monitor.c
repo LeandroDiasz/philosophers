@@ -16,13 +16,13 @@ void	monitor(t_table *table)
 {
 	int	i;
 
-    if (table->num_philos == 1)
-    {
-        ft_usleep(table->time_to_die);
+	if (table->num_philos == 1)
+	{
+		ft_usleep(table->time_to_die);
 		ft_print_status(table->philos, "died");
 		table->end_table = true;
-		return;
-    }	
+		return ;
+	}
 	while (1)
 	{
 		if (verify_end(&table->philos[0]))
@@ -81,7 +81,7 @@ int	check_philo_status(t_table *table, t_philo *philo)
 	return (0);
 }
 
-int		verify_end(t_philo *philo)
+int	verify_end(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->end);
 	if (philo->table->end_table)
