@@ -18,7 +18,7 @@ void	init_table(t_table *table)
 
 	table->start_time = get_time();
 	table->end_table = false;
-	table->forks = malloc(sizeof(t_fork) * table->num_philos);
+	table->forks = (t_fork *)malloc(sizeof(t_fork) * table->num_philos);
 	pthread_mutex_init(&table->print, NULL);
 	pthread_mutex_init(&table->end, NULL);
 	i = 0;
@@ -34,7 +34,7 @@ void	init_philosophers(t_table *table)
 {
 	int	i;
 
-	table->philos = malloc(sizeof(t_philo) * table->num_philos);
+	table->philos = (t_philo *)malloc(sizeof(t_philo) * table->num_philos);
 	table->full_philos = 0;
 	i = 0;
 	while (i < table->num_philos)
