@@ -36,6 +36,8 @@ void	start_simulation(t_table *table)
 
 void    take_forks(t_philo *philo)
 {
+	if (verify_end(philo))
+		return ;
     pthread_mutex_lock(&philo->left_fork->mutex);
     ft_print_status(philo, "has taken a fork");
     pthread_mutex_lock(&philo->right_fork->mutex);
@@ -44,16 +46,22 @@ void    take_forks(t_philo *philo)
 
 void    eat(t_philo *philo)
 {
+	if (verify_end(philo))
+		return ;
     ft_print_status(philo, "is eating");
-    ft_usleep(philo->time_to_eat);
+    ft_usleep(philo->table->time_to_eat);
+	pthread_mutex_lock(&philo->philo_mutex);
     philo->last_meal_time = get_time();
     philo->meals_counter++;
+	pthread_mutex_unlock(&philo->philo_mutex);
 }
 
 void    unlock_forks(t_philo *philo)
 {
     pthread_mutex_unlock(&philo->left_fork->mutex);
     pthread_mutex_unlock(&philo->right_fork->mutex);
+	if (verify_end(philo))
+		return ;
 }
 
 void	*routine(void *arg)
@@ -64,15 +72,21 @@ void	*routine(void *arg)
 
 	if (philo->id % 2 == 0)
 		ft_usleep(100);
-	while ((philo->nbr_limits_meals == -1
-			|| philo->meals_counter < philo->nbr_limits_meals)
-		&& (!philo->end_table))
+	while ((philo->table->nbr_limits_meals == -1 
+	|| philo->meals_counter < philo->table->nbr_limits_meals))
 	{
+		if (verify_end(philo))
+			return (NULL);
+		if (philo->table->num_philos == 1)
+		{
+			ft_print_status(philo, "has taken a fork");
+			return (NULL);
+		}
 		take_forks(philo);
         eat(philo);
         unlock_forks(philo);
 		ft_print_status(philo, "is sleeping");
-		ft_usleep(philo->time_to_sleep);
+		ft_usleep(philo->table->time_to_sleep);
 		ft_print_status(philo, "is thinking");
 	}
 	philo->full = true;
