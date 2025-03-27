@@ -64,6 +64,12 @@ void	free_table(t_table *table)
 		pthread_mutex_destroy(&table->forks[i].mutex);
 		i++;
 	}
+	i = 0;
+	while (i < table->num_philos)
+	{
+		pthread_mutex_destroy(&table->philos[i].philo_mutex);
+		i++;
+	}
 	pthread_mutex_destroy(&table->print);
 	pthread_mutex_destroy(&table->end);
 	free(table->forks);
