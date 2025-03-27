@@ -47,11 +47,11 @@ void	ft_usleep(long time_in_ms)
 
 void	ft_print_status(t_philo *philo, char *status)
 {
-	if (philo->end_table)
+	if (philo->table->end_table)
 		return ;
-	pthread_mutex_lock(&philo->print);
+	pthread_mutex_lock(&philo->table->print);
 	printf("%ld %d %s\n", get_time() - philo->start_time, philo->id, status);
-	pthread_mutex_unlock(&philo->print);
+	pthread_mutex_unlock(&philo->table->print);
 }
 
 void	free_table(t_table *table)
@@ -61,15 +61,11 @@ void	free_table(t_table *table)
 	i = 0;
 	while (i < table->num_philos)
 	{
-		pthread_mutex_destroy(&table->philos[i].print);
-		i++;
-	}
-	i = 0;
-	while (i < table->num_philos)
-	{
 		pthread_mutex_destroy(&table->forks[i].mutex);
 		i++;
 	}
+	pthread_mutex_destroy(&table->print);
+	pthread_mutex_destroy(&table->end);
 	free(table->forks);
 	free(table->philos);
 }
