@@ -40,17 +40,17 @@ void	take_forks(t_philo *philo)
 		return ;
 	if (philo->left_fork < philo->right_fork)
 	{
-    pthread_mutex_lock(&philo->left_fork->mutex);
-    ft_print_status(philo, "has taken a fork");
-    pthread_mutex_lock(&philo->right_fork->mutex);
-    ft_print_status(philo, "has taken a fork");
+		pthread_mutex_lock(&philo->left_fork->mutex);
+		ft_print_status(philo, "has taken a fork");
+		pthread_mutex_lock(&philo->right_fork->mutex);
+		ft_print_status(philo, "has taken a fork");
 	}
 	else
 	{
-    pthread_mutex_lock(&philo->right_fork->mutex);
-    ft_print_status(philo, "has taken a fork");
-    pthread_mutex_lock(&philo->left_fork->mutex);
-    ft_print_status(philo, "has taken a fork");
+		pthread_mutex_lock(&philo->right_fork->mutex);
+		ft_print_status(philo, "has taken a fork");
+		pthread_mutex_lock(&philo->left_fork->mutex);
+		ft_print_status(philo, "has taken a fork");
 	}
 }
 
