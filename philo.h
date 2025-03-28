@@ -37,16 +37,11 @@ typedef struct s_philo
 	int					id;
 	long				meals_counter;
 	long				last_meal_time;
-	long				time_to_die;
-	long				time_to_eat;
-	long				time_to_sleep;
-	long				nbr_limits_meals;
 	long				start_time;
 	bool				full;
-	bool				end_table;
 	t_fork				*left_fork;
 	t_fork				*right_fork;
-	t_mutex				print;
+	t_table				*table;
 	pthread_t			thread;
 }						t_philo;
 
@@ -60,6 +55,7 @@ struct					s_table
 	long				start_time;
 	bool				end_table;
 	long				full_philos;
+	t_mutex				print;
 	t_fork				*forks;
 	t_philo				*philos;
 };
