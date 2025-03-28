@@ -43,11 +43,13 @@ void    take_forks(t_philo *philo)
 }
 
 void    eat(t_philo *philo)
-{
+{	
     ft_print_status(philo, "is eating");
     ft_usleep(philo->table->time_to_eat);
+	pthread_mutex_lock(&philo->eating);
     philo->last_meal_time = get_time();
     philo->meals_counter++;
+	pthread_mutex_unlock(&philo->eating);
 }
 
 void    unlock_forks(t_philo *philo)
@@ -79,6 +81,7 @@ void	*routine(void *arg)
 		ft_print_status(philo, "is sleeping");
 		ft_usleep(philo->table->time_to_sleep);
 		ft_print_status(philo, "is thinking");
+		usleep(1);
 	}
 	philo->full = true;
 	return (NULL);
