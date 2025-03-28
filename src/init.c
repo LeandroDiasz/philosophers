@@ -46,6 +46,7 @@ void	init_philosophers(t_table *table)
 		table->philos[i].right_fork = &table->forks[(i + 1)
 			% table->num_philos];
 		table->philos[i].start_time = table->start_time;
+		pthread_mutex_init(&table->philos[i].eating, NULL);
 		table->philos[i].table = table;
 		i++;
 	}
