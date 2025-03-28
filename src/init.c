@@ -19,13 +19,14 @@ void	init_table(t_table *table)
 	table->start_time = get_time();
 	table->end_table = false;
 	table->forks = malloc(sizeof(t_fork) * table->num_philos);
-	init_philosophers(table);
+	pthread_mutex_init(&table->print, NULL);
 	i = 0;
 	while (i < table->num_philos)
 	{
 		pthread_mutex_init(&table->forks[i].mutex, NULL);
 		i++;
 	}
+	init_philosophers(table);
 }
 
 void	init_philosophers(t_table *table)
@@ -44,13 +45,8 @@ void	init_philosophers(t_table *table)
 		table->philos[i].left_fork = &table->forks[i];
 		table->philos[i].right_fork = &table->forks[(i + 1)
 			% table->num_philos];
-		table->philos[i].time_to_die = table->time_to_die;
-		table->philos[i].time_to_eat = table->time_to_eat;
-		table->philos[i].time_to_sleep = table->time_to_sleep;
-		table->philos[i].nbr_limits_meals = table->nbr_limits_meals;
 		table->philos[i].start_time = table->start_time;
-		table->philos[i].end_table = false;
-		pthread_mutex_init(&table->philos[i].print, NULL);
+		table->philos[i].table = table;
 		i++;
 	}
 }
