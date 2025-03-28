@@ -41,6 +41,7 @@ typedef struct s_philo
 	bool				full;
 	t_fork				*left_fork;
 	t_fork				*right_fork;
+	t_mutex				eating;
 	t_table				*table;
 	pthread_t			thread;
 }						t_philo;
@@ -65,7 +66,7 @@ struct					s_table
 void					error_exit(char *str);
 long					get_time(void);
 void					ft_print_status(t_philo *philo, char *status);
-void					ft_usleep(long time_in_ms);
+void					ft_usleep(int time_in_ms);
 void					free_table(t_table *table);
 
 /*--- parsing.c ---*/
