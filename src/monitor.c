@@ -32,6 +32,7 @@ void	monitor(t_table *table)
 				return ;
 			i++;
 		}
+		//usleep(1);
 	}
 }
 int	check_philo_status(t_table *table, t_philo *philo)
@@ -40,15 +41,16 @@ int	check_philo_status(t_table *table, t_philo *philo)
 	long long	time;
 
 	i = 0;
+	pthread_mutex_lock(&philo->eating);
 	if (philo->full)
 		table->full_philos++;
+	pthread_mutex_unlock(&philo->eating);
 	if (table->full_philos == table->num_philos)
 	{
 		table->end_table = true;
 		return (1);
 	}
 	time = get_time() - philo->last_meal_time;
-	//printf("time: %lld\n", time);
 	if (time > table->time_to_die)
 	{
 		ft_print_status(philo, "died");
