@@ -34,6 +34,7 @@ void	monitor(t_table *table)
 				return ;
 			i++;
 		}
+		usleep(1);
 	}
 }
 
