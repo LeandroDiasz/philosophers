@@ -47,8 +47,13 @@ void	ft_usleep(long time_in_ms)
 
 void	ft_print_status(t_philo *philo, char *status)
 {
+	pthread_mutex_lock(&philo->table->end);
 	if (philo->table->end_table)
+	{
+		pthread_mutex_unlock(&philo->table->end);
 		return ;
+	}
+	pthread_mutex_unlock(&philo->table->end);
 	pthread_mutex_lock(&philo->table->print);
 	printf("%ld %d %s\n", get_time() - philo->start_time, philo->id, status);
 	pthread_mutex_unlock(&philo->table->print);
