@@ -45,7 +45,7 @@ void    take_forks(t_philo *philo)
 void    eat(t_philo *philo)
 {
     ft_print_status(philo, "is eating");
-    ft_usleep(philo->time_to_eat);
+    ft_usleep(philo->table->time_to_eat);
     philo->last_meal_time = get_time();
     philo->meals_counter++;
 }
@@ -64,15 +64,20 @@ void	*routine(void *arg)
 
 	if (philo->id % 2 == 0)
 		ft_usleep(100);
-	while ((philo->nbr_limits_meals == -1
-			|| philo->meals_counter < philo->nbr_limits_meals)
-		&& (!philo->end_table))
+	while ((philo->table->nbr_limits_meals == -1
+			|| philo->meals_counter < philo->table->nbr_limits_meals)
+		&& (!philo->table->end_table))
 	{
+		if (philo->table->num_philos == 1)
+		{
+			ft_print_status(philo, "has taken a fork");
+			return (NULL);
+		}
 		take_forks(philo);
         eat(philo);
         unlock_forks(philo);
 		ft_print_status(philo, "is sleeping");
-		ft_usleep(philo->time_to_sleep);
+		ft_usleep(philo->table->time_to_sleep);
 		ft_print_status(philo, "is thinking");
 	}
 	philo->full = true;
