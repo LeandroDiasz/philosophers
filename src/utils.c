@@ -27,21 +27,17 @@ long	get_time(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-void	ft_usleep(long time_in_ms)
+void	ft_usleep(int time_in_ms)
 {
-	long	start_time;
-	long	target_time;
-	long	remaining;
+	long	finish_time;
+	long	current_time;
 
-	start_time = get_time();
-	target_time = start_time + time_in_ms;
-	while (get_time() < target_time)
+	current_time = get_time();
+	finish_time = current_time + time_in_ms;
+	while (current_time < finish_time)
 	{
-		remaining = target_time - get_time();
-		if (remaining > 1000)
-			usleep((remaining / 2) * 1000);
-		else
-			usleep(remaining * 1000);
+		usleep(((finish_time - current_time) * 1000) / 2);
+		current_time = get_time();
 	}
 }
 
